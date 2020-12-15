@@ -17,13 +17,28 @@ class Calculator {
   }
 
   chooseOperation(operation) {
+    if (this.currentOperation === '') return;
+    if (this.previousOperation !== '') {
+      this.compute();
+    }
     this.operation = operation;
     this.previousOperation = this.currentOperation
     this.currentOperation = ''
   }
 
   compute() {
-
+    let result
+    const prev = parseFloat(this.previousOperation)
+    const current = parseFloat(this.currentOperation)
+    if (isNaN(prev) || isNaN(current)) return;
+    if (this.operation === '+') result = prev + current;
+    if (this.operation === '-') result = prev - current;
+    if (this.operation === 'x') result = prev * current;
+    if (this.operation === '÷') result = prev / current;
+    if (this.operation === '%') result = prev % current;
+    this.currentOperation = result;
+    this.operation = undefined;
+    this.previousOperation = ''
   }
 
   updateDisplay() {
@@ -35,7 +50,7 @@ class Calculator {
 
 const symbols = document.querySelectorAll('[symbol]');
 const numbers = document.querySelectorAll('[number]');
-const equals = document.getElementsByClassName('equals');
+const equals = document.querySelector('[equals]');
 const previousTextElement = document.querySelector('[data-previous]');
 const currentTextElement = document.querySelector('[data-current]');
 
@@ -58,3 +73,8 @@ symbols.forEach(symbol => {
     calculator.updateDisplay();
   });
 });
+
+equals.addEventListener('click', button => {
+  calculator.compute();
+  calculator.updateDisplay();
+})
