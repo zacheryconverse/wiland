@@ -11,10 +11,12 @@ body {
   min-height: 100vh;
   grid-template-columns: repeat(4, 100px);
   grid-template-rows: minmax(150px, auto) repeat(6, 100px);
+
 }
 
 .widget button {
   font-size: 2rem;
+  margin: 3px;
 }
 
 .widget button:hover {
